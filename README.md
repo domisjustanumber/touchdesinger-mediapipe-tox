@@ -3,6 +3,8 @@ A platform-agnostic mediapipe tox for use in Touch Designer, that uses GPU accel
 
 Currently the tox just supports Facial Landmarking, but looking to expand it to more Media Pipe Vision tasks
 
+https://developers.google.com/mediapipe/solutions/vision/face_landmarker
+
 ## Installation
 Copy the dist folder to the same folder as your TouchDesigner project
 
