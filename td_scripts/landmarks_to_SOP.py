@@ -1,19 +1,16 @@
 # me - this DAT
 # scriptOp - the OP which is cooking
 
-triangles = []
+import json
 
-op = me.owner
-mesh = op.par.Mesh.eval()
+triangles = []
+mesh = op('facemesh_triangles')
 for i in range(mesh.numRows):
 	data = [int(mesh[i, 0]), int(mesh[i, 1]), int(mesh[i, 2])]
 	triangles.append(data)
 
 # press 'Setup Parameters' in the OP to call this function to re-create the parameters
 def onSetupParameters(scriptOp):
-	page = scriptOp.appendCustomPage('Custom')
-	m = page.appendDAT('Mesh', label='Mesh data')
-	b = page.appendPulse('Load', label='Load data')
 	return
 
 # called whenever custom pulse parameter is pushed
@@ -27,14 +24,16 @@ def onPulse(par):
 	return
 
 def onCook(scriptOp):
+	rawdata = json.loads(op('landmark_data').text)
+	# print(rawdata['faceLandmarks'][0][0]['x'])
 	scriptOp.clear()
-	landmarks = op('landmarks')
+	landmarks = rawdata['faceLandmarks'][0]
 
-	for i in range (landmarks.numRows):
+	for i in range (len(landmarks)):
 		p = scriptOp.appendPoint()
-		p.x = landmarks[i,0]
-		p.y = 1- landmarks[i,1]
-		p.z = landmarks[i,2]
+		p.x = landmarks[i]['x']
+		p.y = 1- landmarks[i]['y']
+		p.z = landmarks[i]['z']
 
 	for poly in triangles:
 		pp = scriptOp.appendPoly(3, closed=True, addPoints=False)

@@ -13,6 +13,7 @@
 # 		'data' - The data to send back to the client. If displaying a web-page, any HTML would be put here.
 
 # return the response dictionary
+import json
 
 # canvasTOP = op('scriptTOP')
 thisTime = 0
@@ -59,10 +60,16 @@ def onWebSocketClose(webServerDAT, client):
 
 def onWebSocketReceiveText(webServerDAT, client, data):
 	global clients
-	for key in clients.keys():
-		if key != client:
-			webServerDAT.webSocketSendText(key, data)
-	return
+	if(data.find('faceLandmarks', 2,100)):
+		op('landmark_data').text = data
+		return
+	else:
+		print('received WS from client: ' +client)
+		for key in clients.keys():
+			if key != client:
+				# print('forwaring WS message to client: ' +key)
+				webServerDAT.webSocketSendText(key, data)
+		return
 
 def onWebSocketReceiveBinary(webServerDAT, client, data):
 	# global clients, lastTime, thisTime
