@@ -1,5 +1,6 @@
 # me - this DAT
 # dat - the WebSocket DAT
+import json
 
 createModelData = mod('datexec1').createModelData
 canvasTOP = op('scriptTOP')
@@ -25,9 +26,6 @@ def find_matching_camera(old_cameras, new_cameras, key):
 
     # If no matching camera is found in the new cameras list
     return None
-
-import json
-from PIL import Image
 
 def onConnect(dat):
 	print('connected')
@@ -79,7 +77,7 @@ def onReceiveText(dat, rowIndex, message):
 			return
 
 		elif 'faceLandmarks' in data:
-			op('pose_data').text = message
+			op('landmark_data').text = message
 			dat.clear()
 			return
 			
