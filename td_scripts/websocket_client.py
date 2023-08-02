@@ -46,13 +46,6 @@ def onDisconnect(dat):
 # Only text frame messages will be handled in this function.
 
 def onReceiveText(dat, rowIndex, message):
-	if(message == 'ping'):
-		dat.sendText('pong')
-		return
-	if not message:
-		return
-	
-	
 	try:
 		data = json.loads(message)
 		if 'type' in data:
@@ -76,13 +69,11 @@ def onReceiveText(dat, rowIndex, message):
 			
 			return
 
-		elif 'faceLandmarks' in data:
-			op('landmark_data').text = message
-			dat.clear()
-			return
+		# elif 'faceLandmarks' in data:
+		# 	dat.clear()
+		# 	op('landmark_data').text = message
+		# 	return
 			
-		dat.clear()
-
 	except Exception as e:
 		return
 		#print("Error processing JSON: ", e)
