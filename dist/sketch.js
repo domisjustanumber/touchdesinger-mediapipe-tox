@@ -77,9 +77,7 @@ socket.onmessage = (event) => {
 
 
 const video = document.getElementById("webcam");
-const canvasElement = document.getElementById(
-  "output_canvas"
-);
+const canvasElement = document.getElementById("output_canvas");
 
 const canvasCtx = canvasElement.getContext("2d");
 
@@ -178,6 +176,9 @@ async function getMedia() {
 
 let lastVideoTime = -1;
 let results = undefined;
+let sentCanvas = 0;
+let lastTime = 0;
+let thisTime = 0;
 const drawingUtils = new DrawingUtils(canvasCtx);
 
 getMedia();
@@ -190,6 +191,7 @@ async function predictWebcam() {
   canvasElement.style.height = videoWidth * vidRatio + "px";
   canvasElement.width = video.videoWidth;
   canvasElement.height = video.videoHeight;
+
   // Now let's start detecting the stream.
   let nowInMs = Date.now();
   if (lastVideoTime !== video.currentTime) {
@@ -249,9 +251,25 @@ async function predictWebcam() {
           FaceLandmarker.FACE_LANDMARKS_LEFT_IRIS,
           { color: "#30FF30" }
         );
+        /*if (sentCanvas % 1 == 0) {
+          canvasElement.toBlob(
+            (blob) => {
+              socket.send(blob);
+              lastTime = thisTime;
+              thisTime = Date.now();
+              let waitingTime = thisTime - lastTime;
+              console.log("ms since last blob send: " + waitingTime);
+              // console.log(blob);
+            }
+          );
+        }
+        sentCanvas++;
+        */
       }
     }
   }
+
+
   // drawBlendShapes(videoBlendShapes, results.faceBlendshapes);
 
   // Call this function again to keep predicting when the browser is ready.
