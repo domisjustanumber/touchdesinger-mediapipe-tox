@@ -15,7 +15,10 @@ Outputs are:
 - CHOPs for the 478 facial landmarks
 - SOP of the face mesh points (eyes and mout are not filled in)
 - CHOPS for the 52 blendshapes
-- Table DAT of the Transformation Matrix (I believe this is something that allows you to map a flat image onto the plane of the face, but not sure)
+- Table DAT of the Transformation Matrix
+
+## Debugging
+You can debug the Chromium instance by going to http://localhost:9222 in regular Chrome browser
 
 ## Thanks
 Torin Blankensmith and his idea to embed Chromium with a python-based web server to host the mediapipe.js model, and a websocket server for data transfer.
