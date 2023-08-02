@@ -27,7 +27,6 @@ def find_matching_camera(old_cameras, new_cameras, key):
     return None
 
 import json
-from PIL import Image
 
 def onConnect(dat):
 	print('connected')
